@@ -1,18 +1,18 @@
 module.exports =  `
   type User {
-    id: Int!
     name: String!
-    secret: String!
+    posts: [Post]
+    comments: [Comment]
   }
 
   type Comment {
-    author: User!
+    user: User!
     desc: String!
   }
 
   type Post {
     title: String!
-    author: User!
+    user: User!
     comments: [Comment]
   }
 

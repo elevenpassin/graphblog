@@ -1,3 +1,4 @@
+const { find, filter } = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
@@ -5,40 +6,65 @@ const { makeExecutableSchema } = require('graphql-tools');
 
 const typeDefs = require('./typeDefs.gql');
 
-const buoyantair = {
-  id: 0,
-  name: "buoyantair",
-  secret: "123"
-}
+const users = [
+  {
+    userid: 0,
+    name: "buoyantair",
+    secret: "123"
+  },
+  {
+    userid: 1,
+    name: "raxx",
+    secret: "456"
+  }
+];
+
+const comments = [
+  {
+    commentid: 0,
+    postid: 1,
+    userid: 1,
+    desc: "This is cool",
+  },
+  {
+    commentid: 1,
+    postid: 0,
+    userid: 0,
+    desc: "Not bad",
+  },
+  {
+    commentid: 2,
+    postid: 0,
+    userid: 1,
+    desc: "bad",
+  }
+];
 
 const posts = [
   {
     title: "Post title",
-    author: buoyantair,
-    comments: [
-      {
-        author: buoyantair,
-        desc: "Not bad",
-      },
-      {
-        author: buoyantair,
-        desc: "bad",
-      }
-    ]
+    userid: 0,
+    postid: 0,
   },
   {
     title: "Another title",
-    author: buoyantair,
-    comments: [
-      {
-        author: buoyantair,
-        desc: "This is cool",
-      }
-    ]
+    userid: 0,
+    postid: 1,
   }
 ];
 
 const resolvers = {
+  User: {
+    posts: (user) => filter(posts, { userid: user.userid }),
+    comments: (user) => filter(comments, { userid: user.userid })
+  },
+  Comment: {
+    user: (comment) => find(users, { userid: comment.userid })
+  },
+  Post: {
+    user: (post) => find(users, { userid: post.userid }),
+    comments: (post) => filter(comments, { postid: post.postid })
+  },
   Query: {
     allPosts: () => posts
   }
