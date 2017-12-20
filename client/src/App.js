@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+fetch('/ja')
+.then(resp=> resp.text())
+.then(txt => console.log(txt));
+
 class App extends Component {
   render() {
     return (

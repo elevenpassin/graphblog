@@ -77,6 +77,10 @@ const schema = makeExecutableSchema({
 
 const app = express();
 
+app.get('/ja', (req, res) => {
+  res.send('JA JA JA');
+})
+
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
