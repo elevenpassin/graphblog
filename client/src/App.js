@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import 'antd/dist/antd.css';
 import logo from './logo.svg';
 import './App.css';
 
-fetch('/ja')
-.then(resp=> resp.text())
-.then(txt => console.log(txt));
+import { Row, Col } from 'antd';
+
+
+import Blogposts from './components/Blogposts';
 
 class App extends Component {
   render() {
@@ -12,11 +14,11 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">GraphQL Based blog</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <main>
+          <Blogposts/>
+        </main>
       </div>
     );
   }

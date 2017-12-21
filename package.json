@@ -14,7 +14,9 @@
     "express": "^4.16.2",
     "graphql": "^0.12.3",
     "graphql-tools": "^2.14.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "mongod": "^2.0.0",
+    "mongodb": "^3.0.0-rc0"
   },
   "devDependencies": {
     "concurrently": "^3.5.1"
