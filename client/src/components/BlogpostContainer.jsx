@@ -3,7 +3,7 @@ import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Alert, Card } from 'antd';
 
-import Blogpost from './Blogpost';
+import Blogpost from './Blogpost.jsx';
 
 class BlogpostContainer extends Component {
   render() {

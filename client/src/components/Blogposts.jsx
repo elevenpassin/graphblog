@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Spin, Icon, Alert } from 'antd';
 
 
-import BlogpostContainer from './BlogpostContainer';
+import BlogpostContainer from './BlogpostContainer.jsx';
 
 const query = gql`
   query {
