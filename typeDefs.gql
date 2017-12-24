@@ -1,27 +1,29 @@
 module.exports =  `
   type User {
-    userid: Int!
+    userid: String!
     name: String!
     posts: [Post]
     comments: [Comment]
   }
 
   type Comment {
-    commentid: Int!
+    commentid: String!
     user: User!
     desc: String!
   }
 
   type Post {
-    postid: Int!
+    _id: String!
+    postid: String!
     title: String!
+    userid: String!
     user: User!
     content: String!
     comments: [Comment]
   }
 
   type Query {
-    allPosts: [Post]
-    getPost(postid: Int): Post
+    allPosts: [Post] 
+    getPost(postid: String): Post
   }
 `;
