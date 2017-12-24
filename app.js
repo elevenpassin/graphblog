@@ -1,6 +1,7 @@
 const { find, filter } = require('lodash');
 const express = require('express');
 const mongoose = require('mongoose');
+const { ObjectID } = require('mongodb');
 const assert = require('assert');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
@@ -14,7 +15,7 @@ mongoose.connect(CONNECTION_URL, {
   useMongoClient: true
 }); 
 
-const Posts = require('./models/posts');
+const { Post, User } = require('./models');
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'))
@@ -24,24 +25,20 @@ db.on('error', console.error.bind(console, 'connection error:'))
     =====
   `));
 
-
 const resolvers = {
   User: {
-    posts: (user) => filter(posts, { userid: user.userid }),
+    posts: async (user) => await Post.find({ userid: user._id }),
     comments: (user) => filter(comments, { userid: user.userid })
   },
   Comment: {
     user: (comment) => find(users, { userid: comment.userid })
   },
   Post: {
-    comments: (post) => filter(comments, { postid: post.postid }),
-    user: (post) => find(users, { userid: post.userid })
+    comments: (post) => filter(comments, { postid: post._id }),
+    user: async (post) => await User.findOne({ _id: post.userid })
   },
   Query: {
-    allPosts: async () => await Posts.find({}),
-    getPost: (_, { postid }) => {
-      return find(posts, { postid })
-    }
+    allPosts: async () => await Post.find({}),
   }
 }
 
@@ -107,9 +104,8 @@ const comments = [
 
 const posts = [
   {
-    title: "Post title",
-    userid: 0,
-    postid: 0,
+    title: "Save water!",
+    userid: "5a3f88fecd9c9406101645d6",
     content: `
     Lorem ipsum dolor sit amet consectetur adipiscing elit fringilla, 
     massa scelerisque mus quam nulla lobortis litora, 
@@ -120,7 +116,8 @@ const posts = [
     Mus at curae tempor blandit suspendisse molestie tortor eget ornare aliquam, 
     aliquet eros luctus nisi suscipit venenatis platea senectus posuere, 
     interdum proin a in primis rhoncus tellus dapibus litora.
-    `
+    `,
+    comments: []
   },
   {
     title: "Another title",

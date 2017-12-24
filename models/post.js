@@ -1,14 +1,8 @@
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
-
-const { ObjectID } = require('mongodb');
 const Schema = mongoose.Schema;
 
 const postSchema = new Schema({
-  postid: {
-    type: String,
-    required: true
-  },
   title: {
     type: String,
     required: true
@@ -21,8 +15,10 @@ const postSchema = new Schema({
     type: String,
     required: true
   },
+  comments: []
 }, {
-  collection: 'posts', timestamps: true
+  collection: 'posts', 
+  timestamps: true
 });
 
-module.exports =  mongoose.model('posts', postSchema);
+module.exports =  mongoose.model('post', postSchema);

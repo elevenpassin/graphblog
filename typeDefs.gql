@@ -1,6 +1,6 @@
 module.exports =  `
   type User {
-    userid: String!
+    _id: String!
     name: String!
     posts: [Post]
     comments: [Comment]
@@ -14,7 +14,6 @@ module.exports =  `
 
   type Post {
     _id: String!
-    postid: String!
     title: String!
     userid: String!
     user: User!
