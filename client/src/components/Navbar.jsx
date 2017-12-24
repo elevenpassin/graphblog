@@ -14,7 +14,7 @@ export default class Navbar extends Component {
   constructor(props){
     super(props);
     this.state = {
-      current: 'home'
+      current: this.props.location.pathname
     }
   }
 
@@ -26,12 +26,12 @@ export default class Navbar extends Component {
         selectedKeys={[this.state.current]}
         onClick={this.handleClick}
       >
-        <Menu.Item key="home">
+        <Menu.Item key="/">
           <Link to="/">
             Home
           </Link>
         </Menu.Item>
-        <Menu.Item key="account">
+        <Menu.Item key="/account">
           <Link to="/account">
             Login / Signup
           </Link>

@@ -3,7 +3,6 @@ import 'antd/dist/antd.css';
 import logo from './logo.svg';
 import './App.css';
 
-import { Row, Col } from 'antd';
 import { Route } from 'react-router-dom';
 
 import Account from './pages/Account.jsx';
@@ -15,7 +14,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Route path="/" component={Navbar} />
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">GraphQL Based blog</h1>
