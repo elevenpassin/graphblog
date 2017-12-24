@@ -39,6 +39,7 @@ const resolvers = {
   },
   Query: {
     allPosts: async () => await Post.find({}),
+    getPost: async (_, { postid }) => await Post.findOne({ _id: postid })
   }
 }
 

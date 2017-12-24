@@ -9,7 +9,7 @@ import BlogpostContainer from './BlogpostContainer';
 const query = gql`
   query {
     allPosts{
-      postid
+      _id
     }
   }
 `;
@@ -33,7 +33,7 @@ class Blogposts extends Component {
       <div>
         {
           allPosts.map((post) => (
-            <BlogpostContainer key={post.postid} postid={post.postid}/>
+            <BlogpostContainer key={post._id} postid={post._id}/>
           ))
         }
       </div>

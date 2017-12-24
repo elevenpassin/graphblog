@@ -14,16 +14,13 @@ class BlogpostContainer extends Component {
 }
 
 export default graphql(gql`
-query ($postid: Int){
+query ($postid: String){
   getPost(postid: $postid) {
     title,
     user{
       name
     }
     content
-    comments{
-      commentid
-    }
   }
 }
 `)(BlogpostContainer);
