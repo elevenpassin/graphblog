@@ -5,10 +5,13 @@ import './App.css';
 
 import { Route } from 'react-router-dom';
 
-import Account from './pages/Account.jsx';
-
+// Components
 import Blogposts from './components/Blogposts.jsx';
 import Navbar from './components/Navbar.jsx';
+
+// Pages
+import Signin from './pages/Signin.jsx';
+import Dashboard from './pages/Dashboard.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +39,7 @@ class App extends Component {
         </header>
         <Route exact path="/" component={Blogposts} />
         <Route exact path="/account" render={(props) => (
-          this.state.auth === false ? <Account setAuth={this.setAuth} {...props} /> : null
+          this.state.auth === false ? <Signin setAuth={this.setAuth} {...props} /> : <Dashboard />
         )} />
       </div>
     );

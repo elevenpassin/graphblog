@@ -23,8 +23,11 @@ export default class Navbar extends Component {
     if (e.key === "signout") {
       this.props.setAuth(false);
       this.props.history.push('/');
+      this.setState({ current: '/' });
+    } else {
+      this.setState({ current: e.key });
     }
-    this.setState({ current: e.key });
+    
   }
 
   render() {
@@ -52,7 +55,9 @@ export default class Navbar extends Component {
                 </Link>
               </Menu.Item>
               <Menu.Item key="signout" >
+                <Link to={"/"}>
                   Sign out
+                </Link>
               </Menu.Item>
             </SubMenu>
           ) : (
