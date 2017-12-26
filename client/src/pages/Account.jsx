@@ -3,15 +3,32 @@ import { Form, Icon, Input, Button, Checkbox, Row, Col } from 'antd';
 const FormItem = Form.Item;
 
 class NormalLoginForm extends React.Component {
+  
+
+  constructor(props) {
+    super(props);
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
-        fetch('/login', {
+        const resp = await fetch('/login', {
           method: 'POST',
-          body: JSON.stringify(values)
+          headers: new Headers({
+            "Content-Type": "application/json"
+          }),
+          body: JSON.stringify(values),
         });
+
+        const data = await resp.json();
+
+        if (data.auth === true) {
+          this.props.setAuth(true);
+        }
       }
     });
   }

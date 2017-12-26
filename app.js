@@ -53,16 +53,29 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.post('/login', bodyParser.json(), (req, res) => {
+app.post('/login', async (req, res) => {
   console.log('Got user information: \n', req.body);
-  res.send(req.body);
+  const { username, password } = req.body;
+
+  try {
+    const userData = await User.findOne({ name: username, password  });
+    if (userData.password === password) {
+      res.send(JSON.stringify({
+        auth: true
+      }));
+    } else {
+      res.send(JSON.stringify({
+        auth: false
+      }));
+    }
+  } catch(e) {
+    console.error(e);
+  }
 })
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
-
-
 
 app.listen(3001, () => {
   console.log(`
@@ -71,7 +84,7 @@ app.listen(3001, () => {
     GraphiQL running at http://localhost:3001/graphiql/
     =====
   `)
-})
+});
 
 
 

@@ -6,10 +6,11 @@ import {
   Link
 } from 'react-router-dom';
 
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
 export default class Navbar extends Component {
-  handleClick = (e) => {
-    this.setState({ current: e.key });
-  }
+  
   
   constructor(props){
     super(props);
@@ -18,7 +19,18 @@ export default class Navbar extends Component {
     }
   }
 
+  handleClick = (e) => {
+    if (e.key === "signout") {
+      this.props.setAuth(false);
+      this.props.history.push('/');
+    }
+    this.setState({ current: e.key });
+  }
+
   render() {
+
+    const { auth } = this.props;
+
     return (
       <Menu
         theme="dark"
@@ -31,11 +43,26 @@ export default class Navbar extends Component {
             Home
           </Link>
         </Menu.Item>
-        <Menu.Item key="/account">
-          <Link to="/account">
-            Login / Signup
-          </Link>
-        </Menu.Item>
+        {
+          auth ? (
+            <SubMenu title={<span>Account</span>}>
+              <Menu.Item key="/account">
+                <Link to={"/account"}>
+                  Dashboard
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="signout" >
+                  Sign out
+              </Menu.Item>
+            </SubMenu>
+          ) : (
+            <Menu.Item key="/account">
+              <Link to={"/account"}>
+                Sign in
+              </Link>
+            </Menu.Item>
+          )
+        }
       </Menu>
     )
   }
