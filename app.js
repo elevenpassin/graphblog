@@ -50,13 +50,19 @@ const schema = makeExecutableSchema({
 
 const app = express();
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.post('/login', bodyParser.json(), (req, res) => {
+  console.log('Got user information: \n', req.body);
+  res.send(req.body);
+})
+
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-app.get('/ja', (req, res) => {
-  res.send('JA JA JA');
-});
+
 
 app.listen(3001, () => {
   console.log(`

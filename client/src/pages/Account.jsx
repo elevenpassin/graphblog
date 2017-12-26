@@ -8,9 +8,14 @@ class NormalLoginForm extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        fetch('/login', {
+          method: 'POST',
+          body: JSON.stringify(values)
+        });
       }
     });
   }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
@@ -19,7 +24,7 @@ class NormalLoginForm extends React.Component {
         margin: '1em auto'
       }}>
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
@@ -33,17 +38,17 @@ class NormalLoginForm extends React.Component {
             )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('remember', {
+          {/* {getFieldDecorator('remember', {
             valuePropName: 'checked',
             initialValue: true,
           })(
             <Checkbox>Remember me</Checkbox>
             )}<br/>
-          <a className="login-form-forgot" href="">Forgot password</a><br/>
+          <a className="login-form-forgot" href="">Forgot password</a><br/> */}
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button><br/>
-          Or <a href="">register now!</a>
+          {/* Or <a href="">register now!</a> */}
         </FormItem>
       </Form>
     );
