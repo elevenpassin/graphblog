@@ -18,11 +18,17 @@ module.exports =  `
     userid: String!
     user: User!
     content: String!
+    truncatedcontent: String
     comments: [Comment]
   }
 
   type Query {
     allPosts: [Post] 
     getPost(postid: String): Post
+  }
+
+  type Mutation {
+    addPost(title: String, userid: String!, content: String): Post
+    deletePost(postid: String): Int
   }
 `;

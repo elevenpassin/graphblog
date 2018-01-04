@@ -6,7 +6,7 @@ import './App.css';
 import { Route } from 'react-router-dom';
 
 // Components
-import Blogposts from './components/Blogposts.jsx';
+import BlogpostsContainer from './components/BlogpostsContainer.jsx';
 import Navbar from './components/Navbar.jsx';
 
 // Pages
@@ -37,7 +37,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">GraphQL Based blog</h1>
         </header>
-        <Route exact path="/" component={Blogposts} />
+        <Route exact path="/" component={BlogpostsContainer} />
         <Route exact path="/account" render={(props) => (
           this.state.auth === false ? <Signin setAuth={this.setAuth} {...props} /> : <Dashboard />
         )} />

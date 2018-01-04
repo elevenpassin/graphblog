@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Spin, Icon, Alert } from 'antd';
+import { Spin, Icon, Alert, List } from 'antd';
 
-
-import BlogpostContainer from './BlogpostContainer.jsx';
+import ShortBlogpost from './ShortBlogpost';
 
 const query = gql`
   query {
     allPosts{
-      _id
+      _id,
+      title,
+      truncatedcontent
     }
   }
 `;
@@ -17,7 +18,7 @@ const query = gql`
 
 const loader = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-class Blogposts extends Component {
+class ShortBlogpostContainer extends Component {
   render() {
     const { error, loading, allPosts } = this.props.data;
     
@@ -31,14 +32,17 @@ class Blogposts extends Component {
 
     return (
       <div>
-        {
-          allPosts.map((post) => (
-            <BlogpostContainer key={post._id} postid={post._id}/>
-          ))
-        }
+        <List
+          className="list"
+          itemLayout="horizontal"
+          dataSource={allPosts}
+          renderItem={item => (
+            <ShortBlogpost item={item} />
+          )}
+        />
       </div>
     )
   }
 }
 
-export default graphql(query)(props => <Blogposts {...props}/>);
+export default graphql(query)(props => <ShortBlogpostContainer {...props}/>);

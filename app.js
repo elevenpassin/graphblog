@@ -1,4 +1,4 @@
-const { find, filter } = require('lodash');
+const { find, filter, truncate } = require('lodash');
 const express = require('express');
 const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
@@ -35,11 +35,25 @@ const resolvers = {
   },
   Post: {
     comments: (post) => filter(comments, { postid: post._id }),
-    user: async (post) => await User.findOne({ _id: post.userid })
+    user: async (post) => await User.findOne({ _id: post.userid }),
+    truncatedcontent: (post) => truncate(post.content) 
   },
   Query: {
     allPosts: async () => await Post.find({}),
     getPost: async (_, { postid }) => await Post.findOne({ _id: postid })
+  },
+  Mutation: {
+    addPost: async (_, { title, userid, content }) => {
+      const newPost = new Post({ title, userid, content })
+      return newPost.save((err, post) => {
+        if (err) return console.error(err);
+        return post;
+      })
+    },
+    deletePost: async (_, { postid }) => {
+      await Post.deleteOne({ _id: postid })
+      return 0;
+    }
   }
 }
 
