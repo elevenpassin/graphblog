@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { List, Row, Button, Icon, Col } from 'antd';
 const Item = List.Item;
 
@@ -19,7 +19,7 @@ export default ({ item }) => (
   </Col>)]}>
     <Row>
       <Item.Meta
-        title={<a href="#">{item.title}</a>}
+        title={<a href="/">{item.title}</a>}
         description={item.truncatedcontent}
       />
     </Row>

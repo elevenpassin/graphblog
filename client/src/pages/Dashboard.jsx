@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Icon, Button, Col, Row, List } from 'antd';
+import { Col, Row } from 'antd';
 
 import ShortBlogpostContainer from '../components/ShortBlogpostContainer.jsx';
 

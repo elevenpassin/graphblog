@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { find, filter, truncate } = require('lodash');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,7 +10,7 @@ const { makeExecutableSchema } = require('graphql-tools');
 
 const typeDefs = require('./typeDefs.gql');
 
-const CONNECTION_URL = 'mongodb://localhost:27017/blog';
+const CONNECTION_URL = `mongodb://${process.env.dbuser}:${process.env.dbpassword}@${process.env.dbhost}:46377/graphblog`;
 
 mongoose.connect(CONNECTION_URL, {
   useMongoClient: true
@@ -46,7 +47,9 @@ const resolvers = {
     addPost: async (_, { title, userid, content }) => {
       const newPost = new Post({ title, userid, content })
       return newPost.save((err, post) => {
-        if (err) return console.error(err);
+        if (err) {
+          console.error(err);
+        }
         return post;
       })
     },
@@ -91,11 +94,11 @@ app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
 
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-app.listen(3001, () => {
+app.listen(3003, () => {
   console.log(`
     =====
-    Server running at http://localhost:3001/
-    GraphiQL running at http://localhost:3001/graphiql/
+    Server running at http://localhost:3003/
+    GraphiQL running at http://localhost:3003/graphiql/
     =====
   `)
 });
