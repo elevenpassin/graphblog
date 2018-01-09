@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, Card } from 'antd';
-
+import remarkable from 'remarkable';
 import { get } from 'lodash';
+
+const md = new remarkable();
 
 class Blogpost extends Component {
   render() {
@@ -31,10 +33,7 @@ class Blogpost extends Component {
           >
             Author: { name }
           </p>
-          <p>
-            {
-              content
-            }
+          <p dangerouslySetInnerHTML={{__html: content ? md.render(content) : '' }}>
           </p>
         </Card>
       </div>

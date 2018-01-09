@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-
+import remarkable from 'remarkable';
 import { Col, Row, Button } from "antd";
-
 import "./Editor.css";
+
+const md = new remarkable();
 
 class Editor extends Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class Editor extends Component {
                 placeholder="Enter your post here!"
               />
             </Col>
-            <Col span={12}>{content}</Col>
+            <Col span={12} dangerouslySetInnerHTML={{__html: md.render(content) }}></Col>
           </Row>
           <Row gutter={24} className="greybackground">
             <Col span={2} offset={22}>
