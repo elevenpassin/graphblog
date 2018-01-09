@@ -29,7 +29,7 @@ module.exports =  `
 
   type Mutation {
     addUser(name: String!, password: String!): User
-    addPost(title: String, userid: String!, content: String): Post
+    addPost(title: String!, userid: String!, content: String!): Post
     deletePost(postid: String): Int
   }
 `;

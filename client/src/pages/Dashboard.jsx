@@ -5,7 +5,7 @@ import { Link, Route } from "react-router-dom";
 import ShortBlogpostContainer from "../components/ShortBlogpostContainer.jsx";
 
 // Subpages
-import Editor from './Editor.jsx';
+import Editor from './Editor';
 
 const UserDashboard = (
   <Fragment>
@@ -20,7 +20,7 @@ const UserDashboard = (
           <h1>Posts</h1>
         </Col>
         <Col offset={10} span={2}>
-          <Link to="/new/post">
+          <Link to="/account/new/post">
             <Button>Add Post</Button>
           </Link>
         </Col>
@@ -35,11 +35,15 @@ const UserDashboard = (
 );
 
 export default class Dashboard extends Component {
+  constructor(props){
+    super(props);
+  }
+
   render() {
     return (
       <div>
-        <Route path="/new/post" component={Editor} />
-        <Route path="/" render={() => UserDashboard} /> 
+        <Route path="/account/new/post" render={(props) => <Editor {...props} userid={this.props.userid}/>} />
+        <Route exact path="/account" render={() => UserDashboard} /> 
       </div>
     );
   }

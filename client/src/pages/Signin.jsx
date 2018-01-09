@@ -27,7 +27,7 @@ class NormalLoginForm extends React.Component {
         const data = await resp.json();
 
         if (data.auth === true) {
-          this.props.setAuth(true);
+          this.props.setAuth(true, data.userid);
         }
       }
     });

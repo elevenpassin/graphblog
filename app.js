@@ -91,7 +91,8 @@ app.post('/login', async (req, res) => {
     const hashedPassword = await pverify(userData.password, password);
     if (hashedPassword) {
       res.send(JSON.stringify({
-        auth: true
+        auth: true,
+        userid: userData._id
       }));
     } else {
       res.send(JSON.stringify({

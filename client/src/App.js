@@ -17,14 +17,15 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      auth: false
+      auth: false,
+      userid: ''
     }
 
     this.setAuth = this.setAuth.bind(this);
   }
 
-  setAuth(auth) {
-    this.setState({ auth })
+  setAuth(auth, userid) {
+    this.setState({ auth, userid })
   }
 
   render() {
@@ -38,8 +39,8 @@ class App extends Component {
           <h1 className="App-title">GraphQL Based blog</h1>
         </header>
         <Route exact path="/" component={BlogpostsContainer} />
-        <Route exact path="/account" render={(props) => (
-          this.state.auth === false ? <Signin setAuth={this.setAuth} {...props} /> : <Dashboard />
+        <Route path="/account" render={(props) => (
+          this.state.auth === false ? <Signin setAuth={this.setAuth} {...props} /> : <Dashboard userid={this.state.userid}/>
         )} />
       </div>
     );
