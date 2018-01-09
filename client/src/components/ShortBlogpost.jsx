@@ -1,21 +1,31 @@
 import React from 'react';
 import { List, Row, Button, Icon, Col } from 'antd';
+import { graphql } from 'react-apollo';
+import gql from 'graphql-tag';
 const Item = List.Item;
 
-const Controls = () => (
+
+const Controls = ({ _id, mutate}) => (
   <Row gutter={16}>
     <Button>
       <Icon type="edit" />
     </Button>
-    <Button>
+    <Button
+      onClick={() => mutate({
+        variables: {
+          postid: _id
+        }
+      })}
+    >
       <Icon type="delete" />
     </Button>
   </Row>
 );
 
-export default ({ item }) => (
+
+const ShortBlogpost =  ({ item, mutate }) => (
   <Item actions={[(<Col>
-    <Controls />
+    <Controls _id={item._id} mutate={mutate}/>
   </Col>)]}>
     <Row>
       <Item.Meta
@@ -25,3 +35,11 @@ export default ({ item }) => (
     </Row>
   </Item>
 );
+
+const deletePost = gql`
+  mutation deletePost($postid: String!){
+    deletePost(postid: $postid)
+  }
+`;
+
+export default graphql(deletePost)(ShortBlogpost);

@@ -41,4 +41,4 @@ class Blogposts extends Component {
   }
 }
 
-export default graphql(query)(props => <Blogposts {...props}/>);
+export default graphql(query)(Blogposts);
