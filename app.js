@@ -5,6 +5,10 @@ const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
 const assert = require('assert');
 const bodyParser = require('body-parser');
+const { promisify } = require('util');
+const credential = require('credential')(),
+      phash = promisify(credential.hash),
+      pverify = promisify(credential.verify);
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
@@ -44,6 +48,15 @@ const resolvers = {
     getPost: async (_, { postid }) => await Post.findOne({ _id: postid })
   },
   Mutation: {
+    addUser: async (_, { name, password }) => {
+      const hashedPassword = await phash(password); 
+      console.log("hassed it", hashedPassword);
+      const newUser = new User({ name, password: hashedPassword });
+      return newUser.save((err, user) => {
+        if (err) console.error(err);
+        return user;
+      })
+    },
     addPost: async (_, { title, userid, content }) => {
       const newPost = new Post({ title, userid, content })
       return newPost.save((err, post) => {
@@ -72,11 +85,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/login', async (req, res) => {
   console.log('Got user information: \n', req.body);
-  const { username, password } = req.body;
-
   try {
-    const userData = await User.findOne({ name: username, password  });
-    if (userData.password === password) {
+    const { username, password } = req.body;
+    const userData = await User.findOne({ name: username  });
+    const hashedPassword = await pverify(userData.password, password);
+    if (hashedPassword) {
       res.send(JSON.stringify({
         auth: true
       }));
