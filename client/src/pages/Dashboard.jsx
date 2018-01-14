@@ -7,7 +7,7 @@ import ShortBlogpostContainer from "../components/ShortBlogpostContainer.jsx";
 // Subpages
 import Editor from './Editor';
 
-const UserDashboard = (
+const UserDashboard = ({ history }) => (
   <Fragment>
     <Row style={{ background: "#ECECEC", padding: "30px" }}>
       <Col span={24}>
@@ -27,7 +27,7 @@ const UserDashboard = (
       </Row>
       <Row>
         <Col>
-          <ShortBlogpostContainer />
+          <ShortBlogpostContainer history={history}/>
         </Col>
       </Row>
     </Row>
@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
     return (
       <div>
         <Route path="/account/new/post" render={(props) => <Editor {...props} userid={this.props.userid}/>} />
-        <Route exact path="/account" render={() => UserDashboard} /> 
+        <Route exact path="/account" render={() => <UserDashboard {...this.props}/>} /> 
       </div>
     );
   }

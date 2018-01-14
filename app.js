@@ -57,14 +57,30 @@ const resolvers = {
         return user;
       })
     },
-    addPost: async (_, { title, userid, content }) => {
-      const newPost = new Post({ title, userid, content })
-      return newPost.save((err, post) => {
-        if (err) {
-          console.error(err);
-        }
-        return post;
-      })
+    submitPost: async (_, { title, userid, content, postid }) => {
+      if (postid) {
+        const editPost = await Post.findById(postid);
+        if (editPost) {
+          editPost.title = title;
+          editPost.content = content;
+          return editPost.save((err, post) => {
+            if (err) {
+              console.error(err);
+            }
+            return post;
+          }) 
+        } 
+      } 
+      else {
+        const newPost = new Post({ title, userid, content });
+  
+        return newPost.save((err, post) => {
+          if (err) {
+            console.error(err);
+          }
+          return post;
+        })        
+      }
     },
     deletePost: async (_, { postid }) => {
       await Post.deleteOne({ _id: postid })

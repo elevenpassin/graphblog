@@ -40,7 +40,7 @@ class App extends Component {
         </header>
         <Route exact path="/" component={BlogpostsContainer} />
         <Route path="/account" render={(props) => (
-          this.state.auth === false ? <Signin setAuth={this.setAuth} {...props} /> : <Dashboard userid={this.state.userid}/>
+          this.state.auth === false ? <Signin setAuth={this.setAuth} {...props} /> : <Dashboard userid={this.state.userid} {...props} />
         )} />
       </div>
     );

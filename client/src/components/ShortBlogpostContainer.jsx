@@ -10,6 +10,7 @@ const query = gql`
     allPosts{
       _id,
       title,
+      content,
       truncatedcontent
     }
   }
@@ -19,6 +20,9 @@ const query = gql`
 const loader = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class ShortBlogpostContainer extends Component {
+  constructor(props){
+    super(props);
+  }
   render() {
     const { error, loading, allPosts } = this.props.data;
     
@@ -37,7 +41,7 @@ class ShortBlogpostContainer extends Component {
           itemLayout="horizontal"
           dataSource={allPosts}
           renderItem={item => (
-            <ShortBlogpost item={item} />
+            <ShortBlogpost item={item} history={this.props.history}/>
           )}
         />
       </div>

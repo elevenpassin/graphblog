@@ -5,15 +5,17 @@ import gql from 'graphql-tag';
 const Item = List.Item;
 
 
-const Controls = ({ _id, mutate}) => (
+const Controls = ({ mutate, history, item}) => (
   <Row gutter={16}>
-    <Button>
+    <Button
+      onClick={() => history.push('/account/new/post', { post : item, from: 'dashboard' })}
+    >
       <Icon type="edit" />
     </Button>
     <Button
       onClick={() => mutate({
         variables: {
-          postid: _id
+          postid: item._id
         }
       })}
     >
@@ -23,9 +25,9 @@ const Controls = ({ _id, mutate}) => (
 );
 
 
-const ShortBlogpost =  ({ item, mutate }) => (
+const ShortBlogpost =  ({ item, mutate, history }) => (
   <Item actions={[(<Col>
-    <Controls _id={item._id} mutate={mutate}/>
+    <Controls mutate={mutate} history={history} item={item}/>
   </Col>)]}>
     <Row>
       <Item.Meta
