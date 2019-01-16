@@ -1,10 +1,10 @@
 {
-  "name": "hackernews",
+  "name": "graphblog",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"yarn run server\" \"yarn run client\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon app.js",
     "client": "node start-client.js"
   },
@@ -21,6 +21,7 @@
     "mongoose": "^4.13.7"
   },
   "devDependencies": {
-    "concurrently": "^3.5.1"
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.18.9"
   }
 }

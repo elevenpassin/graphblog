@@ -78,7 +78,7 @@ class Editor extends Component {
 
   render() {
     const { title, content, pageTitle, editing } = this.state;
-    const { postID } = this.props.location.state;
+    // const { postID } = this.props.location.state;
     
     return (
       <div className="editor-page">

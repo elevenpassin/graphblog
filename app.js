@@ -13,9 +13,7 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 
 const typeDefs = require('./typeDefs.gql');
-
-const CONNECTION_URL = `mongodb://${process.env.dbuser}:${process.env.dbpassword}@${process.env.dbhost}:46377/graphblog`;
-
+const CONNECTION_URL = `mongodb://${process.env.dbuser}:${process.env.dbpassword}@${process.env.dbhost}:${process.env.dbport}/graphblog-testzone`;
 mongoose.connect(CONNECTION_URL, {
   useMongoClient: true
 }); 
