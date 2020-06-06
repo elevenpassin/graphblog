@@ -9,7 +9,7 @@
     "client": "node start-client.js"
   },
   "dependencies": {
-    "apollo-server-express": "^1.3.2",
+    "apollo-server-express": "^2.14.2",
     "body-parser": "^1.18.2",
     "credential": "^2.0.0",
     "dotenv": "^4.0.0",
